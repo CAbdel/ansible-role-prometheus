@@ -1,7 +1,7 @@
 ---
 - name: "Set Archive name fact"
   set_fact:
-    prometheus_cwe_archive: "cloudwatch_exporter-{{ nodeexporter_version }}-jar-with-dependencies.jar"
+    prometheus_cwe_archive: "cloudwatch_exporter-{{ cloudwatchexporter_version }}-jar-with-dependencies.jar"
 
 - name: "Set Binary url fact"
   set_fact:
