@@ -7,7 +7,7 @@ After=network-online.target
 User={{ prometheus_user }}
 Restart=on-failure
 RestartSec=10
-ExecStart={{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }} \
+ExecStart=java -jar {{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }} \
               {{ cloudwatchexporter_listen_port | default(':9106') }} \
               {{ cloudwatchexporter_daemon_dir }}/{{ cloudwatchexporter_configuration_file_name }}
 
