@@ -15,7 +15,7 @@
 - name: "Download Cloudwatch exporter binaries"
   get_url:
     url: "{{ prometheus_cwe_binary_url }}"
-    dest: "{{ prometheus_path_install }}"
+    dest: "{{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }}"
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
   retries: 5
