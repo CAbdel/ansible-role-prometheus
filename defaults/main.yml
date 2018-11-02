@@ -103,3 +103,18 @@ nodeexporter_listen_port: 9100
 nodeexporter_listen_address: ":{{ nodeexporter_listen_port }}"
 # Collectors enables, comma-separated list of collectors to use. (default "conntrack,diskstats,entropy,edac,filefd,filesystem,hwmon,infiniband,loadavg,mdadm,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,wifi,zfs")
 nodeexporter_collectors_enabled: "conntrack,diskstats,entropy,edac,filefd,filesystem,hwmon,infiniband,loadavg,mdadm,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,wifi,zfs"
+
+
+# Cloudwatch exporter variables
+cloudwatchexporter_version: 0.5.0
+# Cloudwatch exporter service name
+cloudwatchexporter_service_name: cloudwatchexporter_{{ inventory_hostname_short }}
+# Cloudwatch exporter listen address
+cloudwatchexporter_listen_port: 9106
+# Cloudwatch exporter configuration file name
+cloudwatchexporter_configuration_file_name: cloudwatch.yml
+# Cloudwatch exporter configuration file content
+cloudwatchexporter_configuration_file_content:
+
+# Cloudwatch enables, comma-separated list of collectors to use. (default "conntrack,diskstats,entropy,edac,filefd,filesystem,hwmon,infiniband,loadavg,mdadm,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,wifi,zfs")
+nodeexporter_collectors_enabled: "conntrack,diskstats,entropy,edac,filefd,filesystem,hwmon,infiniband,loadavg,mdadm,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,wifi,zfs"
