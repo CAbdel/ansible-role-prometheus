@@ -13,13 +13,13 @@
   register: cloudwatch_binary_stat
 
 - name: "Ensure files permissions"
-    file:
-      path: "{{ cloudwatchexporter_daemon_dir }}"
-      state: directory
-      recurse: yes
-      owner: "{{ prometheus_user }}"
-      group: "{{ prometheus_group }}"
-      mode: "go-w"
+  file:
+    path: "{{ cloudwatchexporter_daemon_dir }}"
+    state: directory
+    recurse: yes
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: "go-w"
 
 - name: "Download Cloudwatch exporter binaries"
   get_url:
