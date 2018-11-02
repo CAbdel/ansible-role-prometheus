@@ -29,7 +29,7 @@
     group: "{{ prometheus_group }}"
   retries: 5
   delay: 10
-when: not cloudwatch_binary_stat.stat.exists
+  when: not cloudwatch_binary_stat.stat.exists
 
 - name: "Ensure files permissions"
   file:
