@@ -9,17 +9,29 @@
 
 - name: "Ensure Cloudwatch exporter binary exists"
   stat:
-    path: "{{ cloudwatchexporter_daemon_dir }}"
+    path: "{{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }}"
   register: cloudwatch_binary_stat
 
-- name: "Download Cloudwatch exporter binaries"
-  get_url:
-    url: "{{ prometheus_cwe_binary_url }}"
-    dest: "{{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }}"
-    owner: "{{ prometheus_user }}"
-    group: "{{ prometheus_group }}"
-  retries: 5
-  delay: 10
+
+- block:
+
+  - name: "Ensure files permissions"
+    file:
+      path: "{{ cloudwatchexporter_daemon_dir }}"
+      state: directory
+      recurse: yes
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_group }}"
+      mode: "go-w"
+
+  - name: "Download Cloudwatch exporter binaries"
+    get_url:
+      url: "{{ prometheus_cwe_binary_url }}"
+      dest: "{{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }}"
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_group }}"
+    retries: 5
+    delay: 10
 
   when: not cloudwatch_binary_stat.stat.exists
 
