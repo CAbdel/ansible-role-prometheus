@@ -6,6 +6,7 @@
       - prometheus
       - alertmanager
       - node_exporter
+      - cloudwatch_exporter
 
   roles:
     - role_under_test

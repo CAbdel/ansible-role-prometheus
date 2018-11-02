@@ -20,3 +20,4 @@
   service:
     name: "{{ cloudwatchexporter_service_name }}"
     state: restarted
+

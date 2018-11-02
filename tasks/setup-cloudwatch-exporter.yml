@@ -32,6 +32,7 @@
     group: "{{ prometheus_group }}"
     mode: "go-w"
 
+
 - name: "Set Configuration file"
   copy:
     content: "{{ cloudwatchexporter_configuration_file_content }}"
