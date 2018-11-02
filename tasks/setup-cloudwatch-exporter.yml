@@ -12,10 +12,7 @@
     path: "{{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }}"
   register: cloudwatch_binary_stat
 
-
-- block:
-
-  - name: "Ensure files permissions"
+- name: "Ensure files permissions"
     file:
       path: "{{ cloudwatchexporter_daemon_dir }}"
       state: directory
@@ -24,16 +21,15 @@
       group: "{{ prometheus_group }}"
       mode: "go-w"
 
-  - name: "Download Cloudwatch exporter binaries"
-    get_url:
-      url: "{{ prometheus_cwe_binary_url }}"
-      dest: "{{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }}"
-      owner: "{{ prometheus_user }}"
-      group: "{{ prometheus_group }}"
-    retries: 5
-    delay: 10
-
-  when: not cloudwatch_binary_stat.stat.exists
+- name: "Download Cloudwatch exporter binaries"
+  get_url:
+    url: "{{ prometheus_cwe_binary_url }}"
+    dest: "{{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }}"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+  retries: 5
+  delay: 10
+when: not cloudwatch_binary_stat.stat.exists
 
 - name: "Ensure files permissions"
   file:
@@ -44,11 +40,10 @@
     group: "{{ prometheus_group }}"
     mode: "go-w"
 
-
 - name: "Set Configuration file"
   copy:
     content: "{{ cloudwatchexporter_configuration_file_content }}"
-    dest: "{{ prometheus_path_install }}/{{ cloudwatchexporter_configuration_file_name }}"
+    dest: "{{ cloudwatchexporter_daemon_dir }}/{{ cloudwatchexporter_configuration_file_name }}"
 
 - name: "Ensure Cloudwatch exporter systemd's unit file exists"
   template:
