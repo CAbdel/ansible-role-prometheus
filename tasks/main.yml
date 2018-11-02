@@ -39,6 +39,10 @@
   include: setup-alertmanager.yml
   when: '"alertmanager" in prometheus_components'
 
+- name: "Install Cloudwatch Exporter"
+  include: setup-cloudwatch-exporter.yml
+  when: '"cloudwatch_exporter" in prometheus_components'
+
 - name: "Install Prometheus"
   include: setup-prometheus.yml
   when: '"prometheus" in prometheus_components'
