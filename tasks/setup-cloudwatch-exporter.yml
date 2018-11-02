@@ -1,0 +1,59 @@
+---
+- name: "Set Archive name fact"
+  set_fact:
+    prometheus_cwe_archive: "cloudwatch_exporter-{{ nodeexporter_version }}-jar-with-dependencies.jar"
+
+- name: "Set Binary url fact"
+  set_fact:
+    prometheus_cwe_binary_url: "{{ __prometheus_cwe_bin_url }}/{{ cloudwatchexporter_version }}/{{ prometheus_cwe_archive }}"
+
+- name: "Ensure Cloudwatch exporter binary exists"
+  stat:
+    path: "{{ cloudwatchexporter_daemon_dir }}"
+  register: cloudwatch_binary_stat
+
+- name: "Download Cloudwatch exporter binaries"
+  get_url:
+    url: "{{ prometheus_cwe_binary_url }}"
+    dest: "{{ prometheus_path_install }}"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+  retries: 5
+  delay: 10
+
+  when: not cloudwatch_binary_stat.stat.exists
+
+- name: "Ensure files permissions"
+  file:
+    path: "{{ prometheus_path_install }}"
+    state: directory
+    recurse: yes
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: "go-w"
+
+
+- name: "Set Configuration file"
+  copy:
+    content: "{{ cloudwatchexporter_configuration_file_content }}"
+    dest: "{{ prometheus_path_install }}/{{ cloudwatchexporter_configuration_file_name }}"
+
+- name: "Ensure Cloudwatch exporter systemd's unit file exists"
+  template:
+    src: "cloudwatchexporter.service.j2"
+    dest: "/etc/systemd/system/{{ cloudwatchexporter_service_name }}.service"
+  when: ( "ansible_service_mgr == 'systemd'")
+
+- name: "Ensure Cloudwatch service (systemd) is started and enabled"
+  service:
+    name: "{{ cloudwatchexporter_service_name }}"
+    state: started
+    enabled: true
+  when: ( "ansible_service_mgr == 'systemd'")
+
+- name: "Ensure Cloudwatch systemd service run at boot time"
+  systemd:
+    name: "{{ cloudwatchexporter_service_name }}"
+    enabled: yes
+  notify:
+    - "restart nodeexporter service"

@@ -1,0 +1,16 @@
+[Unit]
+Description=Cloudwatch exporter {{ cloudwatchexporter_version }}
+Documentation=https://github.com/prometheus/cloudwatch_exporter
+After=network-online.target
+
+[Service]
+User={{ prometheus_user }}
+Restart=on-failure
+RestartSec=10
+ExecStart={{ cloudwatchexporter_daemon_dir }}/{{ prometheus_cwe_archive }} \
+              {{ cloudwatchexporter_listen_port | default(':9106') }} \
+              {{ cloudwatchexporter_daemon_dir }}/{{ cloudwatchexporter_configuration_file_name }}
+
+[Install]
+WantedBy=multi-user.target
+

@@ -7,3 +7,5 @@
 __prometheus_prom_bin_url: "https://github.com/prometheus/prometheus/releases/download"
 __prometheus_am_bin_url: "https://github.com/prometheus/alertmanager/releases/download"
 __prometheus_ne_bin_url: "https://github.com/prometheus/node_exporter/releases/download"
+__prometheus_cwe_bin_url: "https://search.maven.org/remotecontent?filepath=io/prometheus/cloudwatch/cloudwatch_exporter"
+

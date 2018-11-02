@@ -24,3 +24,8 @@
   set_fact:
     nodeexporter_daemon_dir: "{{ prometheus_path_install }}/node_exporter-{{ nodeexporter_version }}.{{ prometheus_platform_suffix }}"
   when: '"node_exporter" in prometheus_components'
+
+- name: "Set cloudwatch exporter daemon directory fact"
+  set_fact:
+    cloudwatchexporter_daemon_dir: "{{ prometheus_path_install }}/cloudwatch_exporter-{{ cloudwatchexporter_version }}"
+  when: '"cloudwatch_exporter" in prometheus_components'

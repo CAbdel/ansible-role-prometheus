@@ -15,3 +15,9 @@
   service:
     name: "{{ nodeexporter_service_name }}"
     state: restarted
+
+- name: "restart cloudwatch service"
+  service:
+    name: "{{ cloudwatchexporter_service_name }}"
+    state: restarted
+
